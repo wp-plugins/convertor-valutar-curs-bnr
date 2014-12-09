@@ -6,11 +6,11 @@
 ** Author: CaseDeVanzare.ro
 ** Author URI: http://www.CaseDeVanzare.ro
 ** Plugin URI: http://www.CaseDeVanzare.ro
-** Version: 1
+** Version: 1.0
 *************************************************************************************/
 
 
-define(CONV_MONEDA, 'convertor_valutar_curs_bnr');
+define(CONV_TEXTDOMAIN, 'convertor_valutar_curs_bnr');
 
 define('XML_FILENAME_FROM_BNR', 'http://bnr.ro/nbrfxrates.xml');
 define('UPDATE_PERIOD',24*60*60); // 24h * 60min * 60sec - set one day into seconds
@@ -18,7 +18,7 @@ define('UPDATE_PERIOD',24*60*60); // 24h * 60min * 60sec - set one day into seco
 
 //--------------------------------------------------------------------
 function currency_conv_init() {
-  load_plugin_textdomain( CONV_MONEDA, false, 'convertor_valutar_curs_bnr/languages' );
+  load_plugin_textdomain( CONV_TEXTDOMAIN, false, 'convertor_valutar_curs_bnr/languages' );
 }
 add_action('plugins_loaded', 'currency_conv_init');
 
@@ -55,8 +55,8 @@ function My_WidgetOutput($args)
 function My_WidgetInit()
 {      
       
-        wp_register_sidebar_widget('my_curr_converter',__('Convertor valutar curs BNR',CONV_MONEDA),'My_WidgetOutput', array('description' =>__('Convertor valutar curs BNR',CONV_MONEDA)) );
-        wp_register_widget_control('my_curr_converter',__('Convertor valutar curs BNR',CONV_MONEDA),'My_WidgetControl', array('description' =>__('Convertor valutar curs BNR',CONV_MONEDA)) );
+        wp_register_sidebar_widget('my_curr_converter',__('Convertor valutar curs BNR',CONV_TEXTDOMAIN),'My_WidgetOutput', array('description' =>__('Convertor valutar curs BNR',CONV_TEXTDOMAIN)) );
+        wp_register_widget_control('my_curr_converter',__('Convertor valutar curs BNR',CONV_TEXTDOMAIN),'My_WidgetControl', array('description' =>__('Convertor valutar curs BNR',CONV_TEXTDOMAIN)) );
 }
  
 function My_WidgetControl()
@@ -71,7 +71,7 @@ function My_WidgetControl()
     $title = $options['converter_title'];
     echo '
     <p>
-    <label for="converter_title">'.__('Titlu:',CONV_MONEDA).' <input name="converter_title"
+    <label for="converter_title">'.__('Titlu:',CONV_TEXTDOMAIN).' <input name="converter_title"
     type="text" value="'.$title.'" /></label>
     <input type="hidden" id="converter_submit" name="converter_submit"
     value="1" />
@@ -92,8 +92,8 @@ function My_Currency_Converter(){
     function convert()
     {
         var xmlhttp,val,from,to;
-        var curr_codes = new Array("AED","AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EGP","EUR","GBP","HUF","INR","JPY","KRW","MDL","MXN","NOK",
-                                "NZD","PLN","RON","RSD","RUB","SEK","TRY","UAH","USD","ZAR");
+        var curr_codes = new Array("EUR","RON","USD","GBP","AED","AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EGP","HUF","INR","JPY","KRW","MDL","MXN","NOK",
+                                "NZD","PLN","RSD","RUB","SEK","TRY","UAH","ZAR");
         val = document.getElementById("val").value.toString();
         from = curr_codes[document.getElementById("from").selectedIndex];
         to = curr_codes[document.getElementById("to").selectedIndex];
@@ -117,88 +117,88 @@ function My_Currency_Converter(){
    </script>';
 
   echo "
-   <div style='width:155px; height:280px; border:0px solid #CCC;padding:5px;'>
+   <div style='width:155px; height:280px; border:1px solid #CCC;padding:5px;background:#DDD;'>
      <form name='myoption' action='' >
-       ".__('Suma:',CONV_MONEDA)."
-        
+       ".__('Suma:',CONV_TEXTDOMAIN)."
+       <br/>
       <input name ='value' type ='text'  id = 'val' value ='' size='15';/>
       <br/><br/>
-      ".__('Din moneda:',CONV_MONEDA)."
-       
+      ".__('Din:',CONV_TEXTDOMAIN)."
+      <br/>
    <select name ='from_curr' id='from' style='width: 145px'>
-    <option value='EUR'>(EUR) Euro</option>
-	<option value='RON'>(RON) ".__('Leul romanesc',CONV_MONEDA)."</option>
-    <option value='GBP'>(GBP) ".__('Lira sterlina',CONV_MONEDA)."</option>
-    <option value='USD'>(USD) ".__('Dolarul american',CONV_MONEDA)."</option>
-    <option value='MDL'>(MDL) ".__('Leul moldovenesc',CONV_MONEDA)."</option>
-    <option value='AED'>(AED) ".__('Dirhamul Emiratelor Arabe',CONV_MONEDA)." </option>
-    <option value='AUD'>(AUD) ".__('Dolarul australian',CONV_MONEDA)."</option>
-    <option value='BGN'>(BGN) ".__('Leva bulgareasca',CONV_MONEDA)."</option>
-    <option value='BRL'>(BRL) ".__('Realul brazilian',CONV_MONEDA)."</option>
-    <option value='CAD'>(CAD) ".__('Dolarul canadian',CONV_MONEDA)."</option>
-    <option value='CHF'>(CHF) ".__('Francul elvetian',CONV_MONEDA)."</option>
-    <option value='CNY'>(CNY) ".__('Yuan-ul chinezesc',CONV_MONEDA)."</option>
-    <option value='CZK'>(CZK) ".__('Coroana ceha',CONV_MONEDA)." </option>
-    <option value='DKK'>(DKK) ".__('Coroana daneza',CONV_MONEDA)."</option>
-    <option value='EGP'>(EGP) ".__('Lira egipteana',CONV_MONEDA)."</option>
-    <option value='HUF'>(HUF) ".__('Forintul maghiar',CONV_MONEDA)."</option>
-    <option value='INR'>(INR) ".__('Rupia indiana',CONV_MONEDA)."</option>
-    <option value='JPY'>(JPY) ".__('Yen-ul japonez',CONV_MONEDA)."</option>
-    <option value='KRW'>(KRW) ".__('Won-ul sud-corean',CONV_MONEDA)."</option>
-    <option value='MXN'>(MXN) ".__('Peso-ul mexican',CONV_MONEDA)."</option>
-    <option value='NOK'>(NOK) ".__('Coroana norvegiana',CONV_MONEDA)."</option>
-    <option value='NZD'>(NZD) ".__('Dolarul neo-zeelandez',CONV_MONEDA)."</option>
-    <option value='PLN'>(PLN) ".__('Zlotul polonez',CONV_MONEDA)."</option>
-    <option value='RSD'>(RSD) ".__('Dinarul sarbesc',CONV_MONEDA)."</option>
-    <option value='RUB'>(RUB) ".__('Rubla ruseasca',CONV_MONEDA)."</option>
-    <option value='SEK'>(SEK) ".__('Coroana suedeza',CONV_MONEDA)."</option>
-    <option value='TRY'>(TRY) ".__('Noua lira turceasca',CONV_MONEDA)."</option>
-    <option value='UAH'>(UAH) ".__('Hryvna ucraineana',CONV_MONEDA)."</option>
-    <option value='ZAR'>(ZAR) ".__('Rand-ul sud-african',CONV_MONEDA)."</option>
+    <option   value='EUR'>(EUR)Euro</option>
+    <option   value='RON'>(RON)".__('Leu romanesc',CONV_TEXTDOMAIN)."</option>
+    <option   value='USD'>(USD)".__('Dolar american',CONV_TEXTDOMAIN)."</option>
+    <option   value='GBP'>(GBP)".__('Lira sterlina',CONV_TEXTDOMAIN)."</option>
+    <option   value='AED'>(AED)".__('Dirham Emiratelor Arabe',CONV_TEXTDOMAIN)." </option>
+    <option   value='AUD'>(AUD)".__('Dolar australian',CONV_TEXTDOMAIN)."</option>
+    <option   value='BGN'>(BGN)".__('Leva bulgareasca',CONV_TEXTDOMAIN)."</option>
+    <option   value='BRL'>(BRL)".__('Real brazilian',CONV_TEXTDOMAIN)."</option>
+    <option   value='CAD'>(CAD)".__('Dolar canadian',CONV_TEXTDOMAIN)."</option>
+    <option   value='CHF'>(CHF)".__('Franc elvetian',CONV_TEXTDOMAIN)."</option>
+    <option   value='CNY'>(CNY)".__('Yuan chinezesc',CONV_TEXTDOMAIN)."</option>
+    <option   value='CZK'>(CZK)".__('Coroana ceha',CONV_TEXTDOMAIN)." </option>
+    <option   value='DKK'>(DKK)".__('Coroana daneza',CONV_TEXTDOMAIN)."</option>
+    <option   value='EGP'>(EGP)".__('Lira egipteana',CONV_TEXTDOMAIN)."</option>
+    <option   value='HUF'>(HUF)".__('Forint maghiar',CONV_TEXTDOMAIN)."</option>
+    <option   value='INR'>(INR)".__('Rupia indiana',CONV_TEXTDOMAIN)."</option>
+    <option   value='JPY'>(JPY)".__('Yen japonez',CONV_TEXTDOMAIN)."</option>
+    <option   value='KRW'>(KRW)".__('Won sud-corean',CONV_TEXTDOMAIN)."</option>
+    <option   value='MDL'>(MDL)".__('Leu moldovenesc',CONV_TEXTDOMAIN)."</option>
+    <option   value='MXN'>(MXN)".__('Peso mexican',CONV_TEXTDOMAIN)."</option>
+    <option   value='NOK'>(NOK)".__('Coroana norvegiana',CONV_TEXTDOMAIN)."</option>
+    <option   value='NZD'>(NZD)".__('Dolar neo-zeelandez',CONV_TEXTDOMAIN)."</option>
+    <option   value='PLN'>(PLN)".__('Zlot polonez',CONV_TEXTDOMAIN)."</option>
+    <option   value='RSD'>(RSD)".__('Dinar sarbesc',CONV_TEXTDOMAIN)."</option>
+    <option   value='RUB'>(RUB)".__('Rubla ruseasca',CONV_TEXTDOMAIN)."</option>
+    <option   value='SEK'>(SEK)".__('Coroana suedeza',CONV_TEXTDOMAIN)."</option>
+    <option   value='TRY'>(TRY)".__('Noua lira turceasca',CONV_TEXTDOMAIN)."</option>
+    <option   value='UAH'>(UAH)".__('Hryvna ucraineana',CONV_TEXTDOMAIN)."</option>
+    <option   value='ZAR'>(ZAR)".__('Rand sud-african',CONV_TEXTDOMAIN)."</option>
 
   </select>
   <br/><br/>
-  ".__('In moneda:',CONV_MONEDA)."
+  ".__('In:',CONV_TEXTDOMAIN)."
   <br/>
   <select name ='to_currency' id ='to' style='width: 145px'>
-    <option value='EUR'>(EUR) Euro</option>
-	<option value='RON'>(RON) ".__('Leul romanesc',CONV_MONEDA)."</option>
-    <option value='GBP'>(GBP) ".__('Lira sterlina',CONV_MONEDA)."</option>
-    <option value='USD'>(USD) ".__('Dolarul american',CONV_MONEDA)."</option>
-    <option value='MDL'>(MDL) ".__('Leul moldovenesc',CONV_MONEDA)."</option>
-    <option value='AED'>(AED) ".__('Dirhamul Emiratelor Arabe',CONV_MONEDA)." </option>
-    <option value='AUD'>(AUD) ".__('Dolarul australian',CONV_MONEDA)."</option>
-    <option value='BGN'>(BGN) ".__('Leva bulgareasca',CONV_MONEDA)."</option>
-    <option value='BRL'>(BRL) ".__('Realul brazilian',CONV_MONEDA)."</option>
-    <option value='CAD'>(CAD) ".__('Dolarul canadian',CONV_MONEDA)."</option>
-    <option value='CHF'>(CHF) ".__('Francul elvetian',CONV_MONEDA)."</option>
-    <option value='CNY'>(CNY) ".__('Yuan-ul chinezesc',CONV_MONEDA)."</option>
-    <option value='CZK'>(CZK) ".__('Coroana ceha',CONV_MONEDA)." </option>
-    <option value='DKK'>(DKK) ".__('Coroana daneza',CONV_MONEDA)."</option>
-    <option value='EGP'>(EGP) ".__('Lira egipteana',CONV_MONEDA)."</option>
-    <option value='HUF'>(HUF) ".__('Forintul maghiar',CONV_MONEDA)."</option>
-    <option value='INR'>(INR) ".__('Rupia indiana',CONV_MONEDA)."</option>
-    <option value='JPY'>(JPY) ".__('Yen-ul japonez',CONV_MONEDA)."</option>
-    <option value='KRW'>(KRW) ".__('Won-ul sud-corean',CONV_MONEDA)."</option>
-    <option value='MXN'>(MXN) ".__('Peso-ul mexican',CONV_MONEDA)."</option>
-    <option value='NOK'>(NOK) ".__('Coroana norvegiana',CONV_MONEDA)."</option>
-    <option value='NZD'>(NZD) ".__('Dolarul neo-zeelandez',CONV_MONEDA)."</option>
-    <option value='PLN'>(PLN) ".__('Zlotul polonez',CONV_MONEDA)."</option>
-    <option value='RSD'>(RSD) ".__('Dinarul sarbesc',CONV_MONEDA)."</option>
-    <option value='RUB'>(RUB) ".__('Rubla ruseasca',CONV_MONEDA)."</option>
-    <option value='SEK'>(SEK) ".__('Coroana suedeza',CONV_MONEDA)."</option>
-    <option value='TRY'>(TRY) ".__('Noua lira turceasca',CONV_MONEDA)."</option>
-    <option value='UAH'>(UAH) ".__('Hryvna ucraineana',CONV_MONEDA)."</option>
-    <option value='ZAR'>(ZAR) ".__('Rand-ul sud-african',CONV_MONEDA)."</option>
+    <option   value='EUR'>(EUR)Euro</option>
+    <option   value='RON'>(RON)".__('Leu romanesc',CONV_TEXTDOMAIN)."</option>
+    <option   value='USD'>(USD)".__('Dolar american',CONV_TEXTDOMAIN)."</option>
+    <option   value='GBP'>(GBP)".__('Lira sterlina',CONV_TEXTDOMAIN)."</option>
+    <option   value='AED'>(AED)".__('Dirham Emiratelor Arabe',CONV_TEXTDOMAIN)." </option>
+    <option   value='AUD'>(AUD)".__('Dolar australian',CONV_TEXTDOMAIN)."</option>
+    <option   value='BGN'>(BGN)".__('Leva bulgareasca',CONV_TEXTDOMAIN)."</option>
+    <option   value='BRL'>(BRL)".__('Real brazilian',CONV_TEXTDOMAIN)."</option>
+    <option   value='CAD'>(CAD)".__('Dolar canadian',CONV_TEXTDOMAIN)."</option>
+    <option   value='CHF'>(CHF)".__('Franc elvetian',CONV_TEXTDOMAIN)."</option>
+    <option   value='CNY'>(CNY)".__('Yuan chinezesc',CONV_TEXTDOMAIN)."</option>
+    <option   value='CZK'>(CZK)".__('Coroana ceha',CONV_TEXTDOMAIN)." </option>
+    <option   value='DKK'>(DKK)".__('Coroana daneza',CONV_TEXTDOMAIN)."</option>
+    <option   value='EGP'>(EGP)".__('Lira egipteana',CONV_TEXTDOMAIN)."</option>
+    <option   value='HUF'>(HUF)".__('Forint maghiar',CONV_TEXTDOMAIN)."</option>
+    <option   value='INR'>(INR)".__('Rupia indiana',CONV_TEXTDOMAIN)."</option>
+    <option   value='JPY'>(JPY)".__('Yen japonez',CONV_TEXTDOMAIN)."</option>
+    <option   value='KRW'>(KRW)".__('Won sud-corean',CONV_TEXTDOMAIN)."</option>
+    <option   value='MDL'>(MDL)".__('Leu moldovenesc',CONV_TEXTDOMAIN)."</option>
+    <option   value='MXN'>(MXN)".__('Peso mexican',CONV_TEXTDOMAIN)."</option>
+    <option   value='NOK'>(NOK)".__('Coroana norvegiana',CONV_TEXTDOMAIN)."</option>
+    <option   value='NZD'>(NZD)".__('Dolar neo-zeelandez',CONV_TEXTDOMAIN)."</option>
+    <option   value='PLN'>(PLN)".__('Zlot polonez',CONV_TEXTDOMAIN)."</option>
+    <option   value='RSD'>(RSD)".__('Dinar sarbesc',CONV_TEXTDOMAIN)."</option>
+    <option   value='RUB'>(RUB)".__('Rubla ruseasca',CONV_TEXTDOMAIN)."</option>
+    <option   value='SEK'>(SEK)".__('Coroana suedeza',CONV_TEXTDOMAIN)."</option>
+    <option   value='TRY'>(TRY)".__('Noua lira turceasca',CONV_TEXTDOMAIN)."</option>
+    <option   value='UAH'>(UAH)".__('Hryvna ucraineana',CONV_TEXTDOMAIN)."</option>
+    <option   value='ZAR'>(ZAR)".__('Rand sud-african',CONV_TEXTDOMAIN)."</option>
   </select>
   <br/>
   <br/>
-   ".__('Rezultat:',CONV_MONEDA)."
+   ".__('Rezultat:',CONV_TEXTDOMAIN)."
  <br/>
 <input  type= 'text' id='conv_value' value='' size='15' style='border:1px solid #0000FF;color:#0000FF';/>
 <input type= 'hidden' id='last_updated_xml_name' value = ".$last_updated_xml_name." />
   </form>
-<div style='width:88px;margin:5px auto;'> <button type= 'button' onclick ='convert()' style='background:#ccc;'>".__('Converteste',CONV_MONEDA)."</button></div><br><small><a rel=\"follow\" target=\"_blank\" href=\"http://www.casedevanzare.ro\">CaseDeVanzare.ro</a></small>
+<div style='width:88px;margin:5px auto;'> <button type= 'button' onclick ='convert()' style='background:#ccc;'>".__('Converteste',CONV_TEXTDOMAIN)."</button></div><br><small><a rel=\"follow\" target=\"_blank\" href=\"http://www.casedevanzare.ro\">CaseDeVanzare.ro</a></small>
  </div>
 ";
  
